@@ -6,7 +6,7 @@ A fully autonomous self-balancing bike
 
 
 Defintion of Swifter : German Inventor Karl von Drais is credited with developing the first bicycle. 
-His machine, known as the "swiftwalker," hit the road in 1817, which also means that is fast and quick.
+His machine, known as the "swiftwalker," hit the road in 1817. In this case "Swifter" means a fast and quick bicycle transportation.
 My initial goal for this project was to use bicycle robots in real-world applications, particularly in logistics and delivery
 
 
