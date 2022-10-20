@@ -14,16 +14,17 @@ My initial goal for this project was to use bicycle robots in real-world applica
 
 
 Some hardware Specifications：
++ CNC + 3D printing for components manufacture
 
 + T-motor brushless motors (https://store.tmotor.com/category.php?id=97)
 + 60KG servo 
 
-    Main Control Modules: 
-+ Nvidia Jetson TX2-NX (https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-tx2/) 
-+ Arduino Canbus (https://wiki.keyestudio.com/KS0411_keyestudio_CAN-BUS_Shield)
++ Main Control Modules: 
+    + Nvidia Jetson TX2-NX (https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-tx2/) 
+    + Arduino Canbus (https://wiki.keyestudio.com/KS0411_keyestudio_CAN-BUS_Shield)
 
 
-    Sensors: 
-+ Intel RealSense D415 (https://dev.intelrealsense.com/docs/docs-get-started)
-+ RPLidar A2 (https://www.slamtec.com/en/Lidar/A2)
++ Sensors: 
+    + Intel RealSense D415 (https://dev.intelrealsense.com/docs/docs-get-started)
+    + RPLidar A2 (https://www.slamtec.com/en/Lidar/A2)
 
