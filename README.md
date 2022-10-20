@@ -15,7 +15,7 @@ My initial goal for this project was to use bicycle robots in real-world applica
 
 Some hardware Specifications：
 
-+ T-motor brushless motors: https://store.tmotor.com/category.php?id=97
++ T-motor brushless motors (https://store.tmotor.com/category.php?id=97)
 + 60KG servo 
 
     Main Control Modules: 
