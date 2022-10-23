@@ -28,3 +28,7 @@ Some hardware Specifications：
     + Intel RealSense D415 (https://dev.intelrealsense.com/docs/docs-get-started)
     + RPLidar A2 (https://www.slamtec.com/en/Lidar/A2)
 
+
+Framework for brushless motors
+
+mcp2515 CAN module + arduino
