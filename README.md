@@ -13,7 +13,7 @@ My initial goal for this project was to use bicycle robots in real-world applica
 
 
 
-Some hardware Specifications：
+Some main hardware Specifications：
 + CNC + 3D printing for components manufacture
 
 + T-motor brushless motors (https://store.tmotor.com/category.php?id=97)
