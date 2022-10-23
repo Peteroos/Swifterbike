@@ -30,8 +30,8 @@ Some hardware Specifications：
 
 
 Framework for brushless motors communication：
-+ reference resouces : https://github.com/autowp/arduino-mcp2515
 + mcp2515 CAN module + arduino
++ reference resouces : https://github.com/autowp/arduino-mcp2515
 
 ![微信图片_20221022213834](https://user-images.githubusercontent.com/97100920/197369042-e8cc57fd-9f8f-445f-ae66-c9d658a728e4.jpg)
 
