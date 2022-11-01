@@ -11,9 +11,9 @@ My initial goal for this project was to use bicycle robots in real-world applica
 
 
 
-`Hardware` contains all the CAD files
+`Hardware` :contains all the CAD files
 
-`Software` contains all the code files
+`Software` :contains all the code files
 
 
 
