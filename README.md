@@ -21,7 +21,7 @@ Some main hardware Specifications：
 + CNC + 3D printing for components manufacture
 
 + T-motor brushless motors (https://store.tmotor.com/category.php?id=97)
-+ RMD brushless motors (https://ozrobotics.com/shop/rmd-x8-16-h-v3-myactuator-brushless-dc-servo-motor-48v-high-torque-hollow-helical-with-new-driver/)
++ RMD brushless motors (https://www.aliexpress.com/store/1101572114)
 + 60KG servo 
 
 + Main Control Modules: 
