@@ -1,1 +1,401 @@
+#include <SPI.h>
+#include <mcp2515.h>
+#include <ros.h>
+#include <sensor_msgs/Imu.h>
+#include <std_msgs/String.h> 
+#include <std_msgs/Empty.h> 
+#include <geometry_msgs/Twist.h>
+
+#define LEFT_EN  A1
+#define LEFT_FR  A2
+#define LEFT_PG  3
+#define LEFT_SV  6
+ 
+#define RIGHT_EN 12
+#define RIGHT_FR 8
+#define RIGHT_PG 2
+#define RIGHT_SV 5
+#define ROBOT_WIDTH 300
+#define LEFT 0
+#define RIGHT 1
+unsigned char channel;
+unsigned char dir;
+unsigned char spd;
+unsigned char leftSpd;
+unsigned char leftDir;
+unsigned char rightSpd;
+unsigned char rightDir;
+unsigned char recBuf;
+double left_vel;
+double right_vel;
+long lasttim;
+long tim;
+
+
+ 
+
+ #define P_MIN -12.5f
+ #define P_MAX 12.5f
+ #define V_MIN -76.0f
+ #define V_MAX 76.0f
+ #define KP_MIN 0.0f
+ #define KP_MAX 500.0f
+ #define KD_MIN 0.0f
+ #define KD_MAX 5.0f
+ #define T_MIN -12.0f
+ #define T_MAX 12.0f
+
+
+
+struct can_frame canMsg;
+struct can_frame turnOff;
+MCP2515 mcp2515(10);
+String command; 
+float serial_motor_values[5];
+
+
+
+
+
+
+ 
+ros::NodeHandle nh;
+ 
+//void messageCb(const sensor_msgs::Imu &blink){
+//   Serial.print(blink.orientation().x);
+//  
+//  }
+// 
+//ros::Subscriber<sensor_msgs::Imu> sub("/imu/data", &messageCb);
+
+void messageCb(const sensor_msgs::Imu& cmd_vel) 
+{ 
+    lasttim=millis();
+    Serial.println("recevied"); 
+    double vel_x=cmd_vel.linear_acceleration.x;
+    double vel_th=cmd_vel.angular_velocity.z;
+    left_vel=vel_x-vel_th*ROBOT_WIDTH/2000;
+    right_vel=vel_x+vel_th*ROBOT_WIDTH/2000;
+    setSpeed(LEFT,left_vel);
+    setSpeed(RIGHT,right_vel);
+} 
+ 
+void setSpeed(char channel,double vel)
+{
+  vel= vel*255;
+  if(vel>255)
+  {
+    dir=1;
+    spd=255;
+  }else if(vel>10)
+  {
+    dir=1;
+    spd=(unsigned char)vel;
+  }else if(vel>-10)
+  {
+    spd=0;
+  }else if(vel>-255)
+  {
+    spd=(unsigned char)(-vel);
+    dir=0;
+  }
+  else
+  {
+    dir=0;
+    spd=255;
+  }
+  if(channel== LEFT)
+  {
+    digitalWrite(LEFT_FR, dir);
+    analogWrite (LEFT_SV,spd); 
+  }else if(channel== RIGHT)
+  {
+    digitalWrite(RIGHT_FR, !dir);
+    analogWrite (RIGHT_SV,spd);
+  }
+  
+}
+ 
+ros::Subscriber<sensor_msgs::Imu> sub("/imu/data", &messageCb);
+ 
+void setup() 
+{ 
+    pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(LEFT_EN, OUTPUT);
+    pinMode(LEFT_FR, OUTPUT);
+    pinMode(LEFT_SV, OUTPUT);
+    pinMode(RIGHT_EN, OUTPUT);
+    pinMode(RIGHT_FR, OUTPUT);
+    pinMode(RIGHT_SV, OUTPUT);
+    Serial.begin(115200); 
+    nh.initNode(); 
+    nh.subscribe(sub); 
+    leftSpd=0;
+    leftDir=0;
+    rightSpd=0;
+    rightDir=0;
+    digitalWrite(LEFT_EN, LOW); 
+    digitalWrite(LEFT_FR, leftDir); 
+    digitalWrite(RIGHT_EN, LOW); 
+    digitalWrite(RIGHT_FR, rightDir);
+    analogWrite (LEFT_SV,leftSpd);
+    analogWrite (RIGHT_SV,rightSpd);
+
+ turnOff.can_id  = 0x001;
+  turnOff.can_dlc = 8;
+  turnOff.data[0] = 0xFF;
+  turnOff.data[1] = 0xFF;
+  turnOff.data[2] = 0xFF;
+  turnOff.data[3] = 0xFF;
+  turnOff.data[4] = 0xFF;
+  turnOff.data[5] = 0xFF;
+  turnOff.data[6] = 0xFF;
+  turnOff.data[7] = 0xFD;
+  
+  while (!Serial);
+  Serial.begin(115200);
+  
+//  mcp2515.reset();
+//  mcp2515.setBitrate(CAN_1000KBPS);
+//  mcp2515.setNormalMode();
+// 
+//  //mcp2515.sendMessage(&turnOff);
+//  motorMode(1);
+//  delay(1000);
+//  motorZero(1);
+//  delay(1000);
+//  //sendToMotor(1,0,0,0,0,0);
+//  //delay(1000);
+//  //sendToMotor(1, 0.0f, 0.0f, 100.0f, 0.0f, 0.0f);
+//  sendToMotor(1, 0, 0, 0, 1, 0);
+//  delay(5000);
+//  Serial.print(mcp2515.readMessage(&canMsg), HEX);
+//    if (mcp2515.readMessage(&canMsg) == MCP2515::ERROR_OK) {
+//    
+//    Serial.print(canMsg.data[0], HEX); // print ID
+//    Serial.print(" "); 
+//   // Serial.print(canMsg.can_dlc, HEX); // print DLC
+//   // Serial.print(" ");
+//
+//    Serial.print(uint_to_float((canMsg.data[1] << 8) | canMsg.data[2], P_MIN, P_MAX, 16));
+//    Serial.print(",");
+//    Serial.print(uint_to_float((canMsg.data[3] << 4) | (canMsg.data[4]>>4), V_MIN, V_MAX, 12));
+//    Serial.print(",");
+//    Serial.print(uint_to_float(((canMsg.data[4] &0xF)<<8) | canMsg.data[5], P_MIN, P_MAX, 12));
+//    Serial.println();  
+
+
+   
+  //}
+    Serial.print(0);
+    nh.initNode(); //for imu
+    nh.subscribe(sub);
+    Serial.print("normal");
+} 
+ 
+void loop() 
+{ 
+//    Serial.println(sub.data);
+  tim = millis(); 
+    if((tim-lasttim)>1000)
+    {
+       setSpeed(LEFT,0);
+       setSpeed(RIGHT,0);
+    }    
+    nh.spinOnce(); 
+    delay(1); 
+
+
+}
+
+
+
+
+
+
+
+
+//void setup() {
+//  
+//
+//  turnOff.can_id  = 0x001;
+//  turnOff.can_dlc = 8;
+//  turnOff.data[0] = 0xFF;
+//  turnOff.data[1] = 0xFF;
+//  turnOff.data[2] = 0xFF;
+//  turnOff.data[3] = 0xFF;
+//  turnOff.data[4] = 0xFF;
+//  turnOff.data[5] = 0xFF;
+//  turnOff.data[6] = 0xFF;
+//  turnOff.data[7] = 0xFD;
+//  
+//  while (!Serial);
+//  Serial.begin(115200);
+//  
+////  mcp2515.reset();
+////  mcp2515.setBitrate(CAN_1000KBPS);
+////  mcp2515.setNormalMode();
+//// 
+////  //mcp2515.sendMessage(&turnOff);
+////  motorMode(1);
+////  delay(1000);
+////  motorZero(1);
+////  delay(1000);
+////  //sendToMotor(1,0,0,0,0,0);
+////  //delay(1000);
+////  //sendToMotor(1, 0.0f, 0.0f, 100.0f, 0.0f, 0.0f);
+////  sendToMotor(1, 0, 0, 0, 1, 0);
+////  delay(5000);
+////  Serial.print(mcp2515.readMessage(&canMsg), HEX);
+////    if (mcp2515.readMessage(&canMsg) == MCP2515::ERROR_OK) {
+////    
+////    Serial.print(canMsg.data[0], HEX); // print ID
+////    Serial.print(" "); 
+////   // Serial.print(canMsg.can_dlc, HEX); // print DLC
+////   // Serial.print(" ");
+////
+////    Serial.print(uint_to_float((canMsg.data[1] << 8) | canMsg.data[2], P_MIN, P_MAX, 16));
+////    Serial.print(",");
+////    Serial.print(uint_to_float((canMsg.data[3] << 4) | (canMsg.data[4]>>4), V_MIN, V_MAX, 12));
+////    Serial.print(",");
+////    Serial.print(uint_to_float(((canMsg.data[4] &0xF)<<8) | canMsg.data[5], P_MIN, P_MAX, 12));
+////    Serial.println();  
+//
+//
+//   
+//  //}
+//    Serial.print(0);
+//    nh.initNode(); //for imu
+//    nh.subscribe(sub);
+//    Serial.print("normal");
+//}
+
+float motor_position = 0;
+
+
+//void loop() {
+//  char buf[50];
+//
+//  if(Serial.available() > 0){
+//      Serial.print("IUGUI");
+//    command = Serial.readString();
+//    command.trim();
+//    command.toCharArray(buf, 50);
+//    char *i;
+//     serial_motor_values[0] = atof(strtok_r(buf, ",", &i));
+//    for(int a = 0; a < 4; a++){
+//      
+//      serial_motor_values[a+1] = atof(strtok_r(NULL, ",", &i));
+//
+//  Serial.println(serial_motor_values[a+1]);
+//    }
+//    
+//  }
+//
+//  sendToMotor(1, serial_motor_values[0], -serial_motor_values[1], serial_motor_values[2], serial_motor_values[3], serial_motor_values[4]);
+//  //sendToMotor(1,2,-6.28,0,5,0);
+//  if (mcp2515.readMessage(&canMsg) == MCP2515::ERROR_OK) {
+//    
+//    Serial.print(canMsg.data[0], HEX); // print ID
+//    Serial.print(" "); 
+//   // Serial.print(canMsg.can_dlc, HEX); // print DLC
+//   // Serial.print(" ");
+//
+//    Serial.print(uint_to_float((canMsg.data[1] << 8) | canMsg.data[2], P_MIN, P_MAX, 16));
+//    Serial.print(",");
+//    Serial.print(uint_to_float((canMsg.data[3] << 4) | (canMsg.data[4]>>4), V_MIN, V_MAX, 12));
+//    Serial.print(",");
+//    Serial.print(uint_to_float(((canMsg.data[4] &0xF)<<8) | canMsg.data[5], P_MIN, P_MAX, 12));
+//    Serial.println();      
+//       
+//  }
+
+//}
+
+
+void sendToMotor(int mot_id, float pos, float vel, float kp, float kd, float torq){
+  struct can_frame cf;
+
+  unsigned int con_pos = float_to_uint(constrain(pos, P_MIN, P_MAX), P_MIN, P_MAX, 16);
+  unsigned int con_vel = float_to_uint(constrain(vel, V_MIN, V_MAX), V_MIN, V_MAX, 12);
+  unsigned int con_kp = float_to_uint(constrain(kp, KP_MIN, KP_MAX), KP_MIN, KP_MAX, 12);
+  unsigned int con_kd = float_to_uint(constrain(kd, KD_MIN, KD_MAX), KD_MIN, KD_MAX, 12);
+  unsigned int con_torq = float_to_uint(constrain(torq, T_MIN, T_MAX), T_MIN, T_MAX, 12);
+  cf.can_id  = mot_id;
+  cf.can_dlc = 8;
+  cf.data[0] = con_pos>>8;
+  cf.data[1] = con_pos & 0xFF;
+  cf.data[2] = con_vel >> 4;
+  cf.data[3] = ((con_vel&0xF)<<4) | (con_kp>>8);
+  cf.data[4] = con_kp&0xFF;
+  cf.data[5] = con_kd>>4;
+  cf.data[6] = ((con_kd&0xF)<<4) | (con_torq>>8);
+  cf.data[7] = con_torq&0xFF;
+  //for(int i = 0; i < 8; i++){
+      //Serial.println(cf.data[i], HEX);
+  //  } 
+  
+  Serial.println(mcp2515.sendMessage(&cf), HEX);
+}
+
+void motorMode(int mot_id){
+  struct can_frame cf;
+  cf.can_id  = mot_id;
+  cf.can_dlc = 8;
+  cf.data[0] = 0xFF;
+  cf.data[1] = 0xFF;
+  cf.data[2] = 0xFF;
+  cf.data[3] = 0xFF;
+  cf.data[4] = 0xFF;
+  cf.data[5] = 0xFF;
+  cf.data[6] = 0xFF;
+  cf.data[7] = 0xFC;
+  mcp2515.sendMessage(&cf);
+  //Serial.println(mcp2515.sendMessage(&cf), HEX);
+}
+
+void motorZero(int mot_id){
+  struct can_frame cf;
+  cf.can_id  = mot_id;
+  cf.can_dlc = 8;
+  cf.data[0] = 0xFF;
+  cf.data[1] = 0xFF;
+  cf.data[2] = 0xFF;
+  cf.data[3] = 0xFF;
+  cf.data[4] = 0xFF;
+  cf.data[5] = 0xFF;
+  cf.data[6] = 0xFF;
+  cf.data[7] = 0xFE;
+  mcp2515.sendMessage(&cf);
+  //Serial.println(mcp2515.sendMessage(&cf), HEX);
+}
+
+
+
+//Function by Ben Katz: 
+//https://os.mbed.com/users/benkatz/code/CanMasterTest//file/d24fd64d1fcb/math_ops.cpp/
+int float_to_uint(float x, float x_min, float x_max, int bits){
+    // Converts a float to an unsigned int, given range and number of bits 
+    float span = x_max - x_min;
+    float offset = x_min;
+    unsigned int pgg = 0;
+    if(bits == 12){
+      pgg = (unsigned int) ((x-offset)*4095.0/span);
+    }else if(bits == 16){
+      pgg = (unsigned int) ((x-offset)*65535.0/span);
+    }
+    return pgg;
+}
+
+float uint_to_float(unsigned int x_int, float x_min, float x_max, int bits){
+  float span = x_max - x_min;
+  float offset = x_min;
+  float pgg = 0;
+  if(bits == 12){
+    pgg = ((float)x_int)*span/4095.0 + offset;
+  }else if(bits == 16){
+    pgg = ((float)x_int)*span/65535.0 + offset;
+  }
+  return pgg;
+}
 
