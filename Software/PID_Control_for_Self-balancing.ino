@@ -184,8 +184,6 @@ void motorZero(int mot_id){
 
 
 
-//Function by Ben Katz:
-//https://os.mbed.com/users/benkatz/code/CanMasterTest//file/d24fd64d1fcb/math_ops.cpp/
 int float_to_uint(float x, float x_min, float x_max, int bits){
     // Converts a float to an unsigned int, given range and number of bits
     float span = x_max - x_min;
