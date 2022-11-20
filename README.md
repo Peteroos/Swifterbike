@@ -26,7 +26,7 @@ Some main hardware Specifications：
 
 + Main Control Modules: 
     + Nvidia Jetson TX2-NX (https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-tx2/) 
-    + Arduino Canbus (https://wiki.keyestudio.com/KS0411_keyestudio_CAN-BUS_Shield)
+    + Arduino Canbus (https://www.amazon.com/Comidox-MCP2515-Receiver-Controller-Development/dp/B07J9KZ4L4/ref=asc_df_B07J9KZ4L4?tag=bingshoppinga-20&linkCode=df0&hvadid=80676781093377&hvnetw=o&hvqmt=e&hvbmt=be&hvdev=c&hvlocint=&hvlocphy=&hvtargid=pla-4584276308222730&psc=1)
 
 
 + Sensors: 
