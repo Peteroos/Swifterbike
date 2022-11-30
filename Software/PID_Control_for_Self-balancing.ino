@@ -2,8 +2,9 @@
 #include <mcp2515.h>
 #include<ros.h>
 #include<sensor_msgs/Imu.h>
-#include<geometry_msgs/Vector3.h>
-#include<geometry_msgs/Quaternion.h>
+#include<geometry_msgs/Accel.h>
+
+
 #define P_MIN -12.5f
 #define P_MAX 12.5f
 #define V_MIN -76.0f
@@ -50,25 +51,25 @@ float Vertical(float Med,float Angle,float gyro_x)
 	PWM_out1=Vertical_Kp*(Angle-Med)+Vertical_Kd*(gyro_x);
 	return PWM_out1;
 }
-void messageCb(const sensor_msgs::Imu &imu_data){
-	//Serial.print(imu_data.header.frame_id);
-	//linear acc
-	Serial.print(imu_data.linear_acceleration.x);
-	Serial.print(imu_data.linear_acceleration.y);
-	Serial.print(imu_data.linear_acceleration.z);
-	//angular velocity
-	Serial.print(imu_data.angular_velocity.x);
-	Serial.print(imu_data.angular_velocity.y);
-	Serial.print(imu_data.angular_velocity.z);
-	//attitude
-	Serial.print(imu_data.orientation.x);
-	Serial.print(imu_data.orientation.y);
-	Serial.print(imu_data.orientation.z); 
-	Serial.print(imu_data.orientation.w);
-	q0=imu_data.orientation.x;
-	q1=imu_data.orientation.y;
-	q2=imu_data.orientation.z;
-	q3=imu_data.orientation.w;
+void messageCb(const geometry_msgs::Accel &imu_data){
+// 	//Serial.print(imu_data.header.frame_id);
+// 	//linear acc
+// 	Serial.print(imu_data.linear_acceleration.x);
+// 	Serial.print(imu_data.linear_acceleration.y);
+// 	Serial.print(imu_data.linear_acceleration.z);
+// 	//angular velocity
+// 	Serial.print(imu_data.angular_velocity.x);
+// 	Serial.print(imu_data.angular_velocity.y);
+// 	Serial.print(imu_data.angular_velocity.z);
+// 	//attitude
+// 	Serial.print(imu_data.orientation.x);
+// 	Serial.print(imu_data.orientation.y);
+// 	Serial.print(imu_data.orientation.z); 
+// 	Serial.print(imu_data.orientation.w);
+// 	q0=imu_data.orientation.x;
+// 	q1=imu_data.orientation.y;
+// 	q2=imu_data.orientation.z;
+// 	q3=imu_data.orientation.w;
 	//Calculated pitch, roll and yaw
 	pitch = asin(-2 * q1 * q3 + 2 * q0* q2)* 57.3;	// pitch
 	roll  = atan2(2 * q2 * q3 + 2 * q0 * q1, -2 * q1 * q1 - 2 * q2* q2 + 1)* 57.3;	// roll
