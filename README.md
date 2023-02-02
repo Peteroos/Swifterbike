@@ -20,7 +20,7 @@ My initial goal for this project was to use bicycle robots in real-world applica
 Some main hardware Specifications：
 + CNC + 3D printing for components manufacture
 
-+ T-motor brushless motors: (https://store.tmotor.com/category.php?id=97)
++ T-motor brushless motors using CAN communication: (https://store.tmotor.com/category.php?id=97)
     + Ak80-6
     + Ak60-6
 + 60KG servo 
