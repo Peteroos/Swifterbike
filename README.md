@@ -12,7 +12,7 @@ My initial goal for this project was to use bicycle robots in real-world applica
 
 
 
-Some main hardware Specifications：
+## Hardware Specifications：
 
 `Hardware` : contains all the CAD files
 + CNC + 3D printing for components manufacture
@@ -35,6 +35,8 @@ Some main hardware Specifications：
 `Software` : contains all the code files
 
 + 电机通讯结构: 本人目前的能力还没有达到去写一套完整的电机通讯的库，所以这里就直接使用了了Github上开源的CubeMars电机通讯库，项目相关的电机控制程序也都是在这个库的基础上写的，连接会放仓库最下面，关于如何使用仓库了也都有非常详细的介绍。因为tx2-nx直接带有CAN口，电机和开发板之间的通讯要加上两个120ohm的电阻，注意是要带CAN收发器的情况下。
+
++ PID:
 
 
 
