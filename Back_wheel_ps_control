@@ -23,19 +23,16 @@ class robot():
     def __init__(self):
         rospy.init_node('robot_controller', anonymous=True)
         self.pose_subscriber2 = rospy.Subscriber('/joy',Joy,self.callback)
-        self.rate = rospy.Rate(1)
+        self.rate = rospy.Rate(20)
             
     def initmotor(self,dev):
         dev.set_zero_position()
         time.sleep(1.5) # wait for the motor to zero (~1 second)
         dev.set_speed_gains(kd=0.5)
-
     def updatemotor(self,dev,vel_msg):
         dev.update()
         print(vel_msg)
         dev.velocity = vel_msg
-
-
 
     def callback(self, data):
         global inn
@@ -64,10 +61,6 @@ vel_msg=Twist()
 
 ''' robot position '''
 turtle = robot()
-
-#turtle.openmotor()
-#turtle.initmotor()
-
 turtle.callback(data) #without this, getting error
 global inn
 inn=0
