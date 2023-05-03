@@ -1,7 +1,7 @@
 # Swifterbike 复刻稚晖军的无人自行车！
 A fully autonomous self-balancing bike 
 
-只用python复刻稚晖君的无人自行车！
+用python复刻稚晖君的无人自行车！
 
 
 ![image](https://user-images.githubusercontent.com/97100920/196859645-f2c14f5a-aec7-4d89-97b3-0bc14e391040.png)
@@ -36,6 +36,7 @@ My initial goal for this project was to use bicycle robots in real-world applica
     + Intel RealSense D415 (https://dev.intelrealsense.com/docs/docs-get-started)
     + RPLidar A2 (https://www.slamtec.com/en/Lidar/A2)
     + Yesense IMU YIS300-V-DK (found on Alibaba) (淘宝上找的)
+   
 
 ## Software Specifications 软件层面说明:
 `Software` : contains all the code files
@@ -43,6 +44,9 @@ My initial goal for this project was to use bicycle robots in real-world applica
 + Motor communication framework: I have not yet reached the ability to write a complete motor communication library, so here I directly used an open source CubeMars motor communication library called the `TMotorCANControl`, the project-related motor control program is also written on the basis of this library, and the link for the motor library repository will be placed at the bottom, about how to use the library also has a very detailed introduction there. Since the Nvidia jetson tx2-nx module comes with CAN port, the communication between the motors and the board should be simply just added two 120ohm resistors between, note that my carrier board has CAN transceiver.
   
   电机通讯结构: 本人目前的能力还没有达到去写一套完整的电机通讯的库，所以这里就直接使用了了Github上开源的CubeMars电机通讯库，项目相关的电机控制程序也都是在这个库的基础上写的，连接会放仓库最下面，关于如何使用仓库了也都有非常详细的介绍。因为tx2-nx直接带有CAN口，电机和开发板之间的通讯要加上两个120ohm的电阻，注意是要带CAN收发器的情况下。
+   
++ `yesense-ros-v1.3` file description: This package is the ros package for the sensor driver, the specific data are encapsulated in the form of rostopic, no need to use the filter to noise reduction processing of the data. The specific operation is described in detail in the file directory `README.md`.
+   `yesense-ros-v1.3` 文件说明： 此包为传感器驱动的的ros包，具体的数据都以rostopic的形式封装好，不需要用滤波对数据进行降噪处理，直接调用就好。具体的操作方式在文件目录下 `README.md`都有详细描述
 
 + Interacting sensors with motors: In this project, I used ros to communication modules between modules. ROSPY can interact with motor libraries and sensors very efficiently and easily. In the `Software` directory, ws is a catkin workspace created by itself based on the msg type of the IMU, which needs to be `catkin_make` before it works. The main program for PID has to be run in the '/ws' directory, named `PID.py`, and needs to be executed before The main program for PID should be run in the '/ws' directory, and you need to enter `source devel/setup.bash` before executing it, otherwise python will report an import error.
  
@@ -53,6 +57,7 @@ My initial goal for this project was to use bicycle robots in real-world applica
    PID平衡基本原理：网上其实有非常多的相关资料能去参考，我在这里就大概地说一下，其实就是每次自行车在往某一方向倾倒时，惯性轮通过旋转产生与倾倒方向相反的作用力矩，使自行车保持平衡。PID的引入是为了减小误差。类似的项目正常情况下都将程序分为两个部分：直立环的PD控制和速度环的PI控制。直立环主要就是为了保持车声平衡，速度环的加入是为了减小惯性轮的转速从而减小误差。总体上来说PID的原理比较容易理解，最重要的部分还是去调参，这也是本人在此项目上遇到的最大的难点。
 
 + PID tuning: This is also the first time I came across this kind of project that requires a lot of time to tune the parameters. In order to adjust the pid parameters in the early stage, I simply wrote a GUI applet to run with the PID program. the GUI applet will publish the modified parameters through ros, and the PID main program will subscribe to it. the logic is actually very simple.
+   
    PID调参：这也是本人第一次接触到此类的需要花大量时间调参的项目。为了在前期方便调整pid参数，我简单地写了一个GUI的小程序，搭配着PID程序一起运行。GUI小程序将修改后的参数通过ros发布出去，PID主程序那边订阅，逻辑其实很简单。
 
 
@@ -60,6 +65,8 @@ My initial goal for this project was to use bicycle robots in real-world applica
 ## Reference Links 参考链接:
 + Motor Library repository 电机库链接: https://github.com/neurobionics/TMotorCANControl
 + Creatig customize msg type 创建自定义的msg类型链接：https://blog.csdn.net/Yifancoder/article/details/118360588
++ rospy: http://wiki.ros.org/rospy
+
 
 
 
