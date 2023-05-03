@@ -1,0 +1,2 @@
+set(yesense_imu_MESSAGE_FILES "msg/YesenseImuSensorData.msg")
+set(yesense_imu_SERVICE_FILES "")

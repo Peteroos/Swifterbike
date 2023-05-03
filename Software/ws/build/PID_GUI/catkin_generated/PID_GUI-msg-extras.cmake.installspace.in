@@ -1,0 +1,2 @@
+set(PID_GUI_MESSAGE_FILES "msg/PID_Para.msg")
+set(PID_GUI_SERVICE_FILES "")

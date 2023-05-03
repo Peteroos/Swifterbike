@@ -1,0 +1,8 @@
+build
+devel
+install
+*.pdf
+settings.json
+.catkin_workspace
+.DS_Store
+src/CMakeLists.txt
