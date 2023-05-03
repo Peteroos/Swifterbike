@@ -64,8 +64,8 @@ My initial goal for this project was to use bicycle robots in real-world applica
 
 
 ## Reference Links 参考链接:
-+ Motor Library repository 电机库链接: https://github.com/neurobionics/TMotorCANControl
-+ Creatig customize msg type 创建自定义的msg类型链接：https://blog.csdn.net/Yifancoder/article/details/118360588
++ Motor Library repository 电机库: https://github.com/neurobionics/TMotorCANControl
++ Creatig customize msg type 创建自定义的msg类型：https://blog.csdn.net/Yifancoder/article/details/118360588
 + rospy: http://wiki.ros.org/rospy
 
 
