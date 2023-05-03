@@ -46,6 +46,7 @@ My initial goal for this project was to use bicycle robots in real-world applica
   电机通讯结构: 本人目前的能力还没有达到去写一套完整的电机通讯的库，所以这里就直接使用了了Github上开源的CubeMars电机通讯库，项目相关的电机控制程序也都是在这个库的基础上写的，连接会放仓库最下面，关于如何使用仓库了也都有非常详细的介绍。因为tx2-nx直接带有CAN口，电机和开发板之间的通讯要加上两个120ohm的电阻，注意是要带CAN收发器的情况下。
    
 + `yesense-ros-v1.3` file description: This package is the ros package for the sensor driver, the specific data are encapsulated in the form of rostopic, no need to use the filter to noise reduction processing of the data. The specific operation is described in detail in the file directory `README.md`.
+   
    `yesense-ros-v1.3` 文件说明： 此包为传感器驱动的的ros包，具体的数据都以rostopic的形式封装好，不需要用滤波对数据进行降噪处理，直接调用就好。具体的操作方式在文件目录下 `README.md`都有详细描述
 
 + Interacting sensors with motors: In this project, I used ros to communication modules between modules. ROSPY can interact with motor libraries and sensors very efficiently and easily. In the `Software` directory, ws is a catkin workspace created by itself based on the msg type of the IMU, which needs to be `catkin_make` before it works. The main program for PID has to be run in the '/ws' directory, named `PID.py`, and needs to be executed before The main program for PID should be run in the '/ws' directory, and you need to enter `source devel/setup.bash` before executing it, otherwise python will report an import error.
