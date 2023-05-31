@@ -144,12 +144,6 @@ if __name__ == '__main__':
             data.rate.sleep()
 
     
-    #update output to the motor
-            #a = dev.get_output_velocity_radians_per_second()
-            #print('----------------------',a)
-            #dev.velocity += t
-            #time.sleep(1)
-            
             
             
 
