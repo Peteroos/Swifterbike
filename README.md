@@ -1,7 +1,7 @@
 # Swifterbike 复刻稚晖君的无人自行车！
 A fully autonomous self-balancing bike 
 
-用python复刻稚晖君的无人自行车！
+复刻稚晖君的无人自行车！
 
 
 ![image](https://user-images.githubusercontent.com/97100920/196859645-f2c14f5a-aec7-4d89-97b3-0bc14e391040.png)
