@@ -113,23 +113,23 @@ if __name__ == '__main__':
         #PID 
             error    = data.pitch - med_angle
             print('error:',error)
-            #current_speed = dev.get_output_velocity_radians_per_second() 
-            #print('current_velocity:',current_speed)
-            #print #speed_0: #speed_0)
-            #bias     = current_speed - #speed_0
-            #speed_0  = current_speed
-            #print('bias:',bias)
-            #Integral += bias
-            #print('Integral:',Integral)
+            current_speed = dev.get_output_velocity_radians_per_second() 
+            print('current_velocity:',current_speed)
+            print #speed_0: #speed_0)
+            bias     = current_speed - #speed_0
+            speed_0  = current_speed
+            print('bias:',bias)
+            Integral += bias
+            print('Integral:',Integral)
         
             vertical = data.kp * error + data.kd * data.angularvelo  
             print('vertical loop:',vertical)
         
-            #Speed    = sKp * bias  + Ki * Integral
-            #speed    = Vertical_Kp * Speed
-            #print('speed loop:',speed)
+            Speed    = sKp * bias  + Ki * Integral
+            speed    = Vertical_Kp * Speed
+            print('speed loop:',speed)
         
-            output = vertical #- speed
+            output = vertical - speed
         
 
             print('output:',output)     
