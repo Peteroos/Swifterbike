@@ -7,7 +7,7 @@ A fully autonomous self-balancing bike
 ![image](https://user-images.githubusercontent.com/97100920/196859645-f2c14f5a-aec7-4d89-97b3-0bc14e391040.png)
 
 
-## Defintion of "Swifter" 本人为此项目取的名嘻嘻 : 
+## Defintion of "Swifter"  : 
 
 German Inventor Karl von Drais is credited with developing the first bicycle. 
 His machine, known as the "swiftwalker," hit the road in 1817. 
