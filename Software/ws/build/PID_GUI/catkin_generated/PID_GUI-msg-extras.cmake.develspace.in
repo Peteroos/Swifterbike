@@ -1,2 +1,0 @@
-set(PID_GUI_MESSAGE_FILES "/home/peter/kk/ws/src/PID_GUI/msg/PID_Para.msg")
-set(PID_GUI_SERVICE_FILES "")

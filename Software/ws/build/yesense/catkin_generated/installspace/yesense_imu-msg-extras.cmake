@@ -1,2 +1,0 @@
-set(yesense_imu_MESSAGE_FILES "msg/YesenseImuEulerAngle.msg;msg/YesenseImuLocation.msg;msg/YesenseImuQuaternion.msg;msg/YesenseImuStatus.msg;msg/YesenseImuUtcTime.msg;msg/YesenseImuVelocity.msg;msg/YesenseImuMasterGnssData.msg;msg/YesenseImuSlaveGnssData.msg;msg/YesenseImuGnssData.msg;msg/YesenseImuGpsData.msg;msg/YesenseImuNavData.msg;msg/YesenseImuInertialData.msg;msg/YesenseImuSensorData.msg;msg/YesenseImuAllData.msg;msg/YesenseImuCmdResp.msg")
-set(yesense_imu_SERVICE_FILES "")

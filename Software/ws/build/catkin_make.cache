@@ -1,2 +1,0 @@
-pid_gui:std_msgs:yesense
--DCATKIN_DEVEL_PREFIX=/home/peter/kk/ws/devel -DCMAKE_INSTALL_PREFIX=/home/peter/kk/ws/install -G Unix Makefiles
